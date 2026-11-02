@@ -19,8 +19,8 @@ jupyter:
   nbformat_minor: 5
 ---
 
-::: {#7e575b5e .cell .markdown id="7e575b5e"}
-# Analítica Exploratoria de Datos (EDA) · Adult Income {#analítica-exploratoria-de-datos-eda--adult-income}
+
+# Analítica Exploratoria de Datos (EDA) · Adult Income 
 
 ### ¿Qué factores se asocian con ganar más de USD 50,000 al año? Una lectura desde la ingeniería, el diseño y la administración
 
@@ -67,9 +67,7 @@ Docente: Carlos Mario Minu Quiroga
 > **Convención numérica:** el notebook usa punto decimal y coma como
 > separador de miles (igual que las salidas de Python), por ejemplo
 > `48,790` filas y `23.9 %`.
-:::
 
-::: {#17486afb .cell .markdown id="17486afb"}
 ## Resumen ejecutivo
 
 Analizamos **48,790 personas adultas** del censo de EE. UU. de 1994
@@ -100,9 +98,9 @@ todos sustentados con evidencia en las secciones siguientes:
     de las personas acumula el 56 %) y contienen un código truncado en
     99,999; y la ausencia de ocupación es *informativa* (9.4 % de
     ingresos altos entre quienes no la reportan).
-:::
 
-::: {#28d8d8dc .cell .markdown id="28d8d8dc"}
+
+
 ## Contenido
 
 1.  Comprensión del problema y del dataset
@@ -121,15 +119,13 @@ todos sustentados con evidencia en las secciones siguientes:
 14. Reproducibilidad y referencias
 
 -   Anexo A (opcional): modelo estadístico de la brecha de género
-:::
 
-::: {#48a82600 .cell .markdown id="48a82600"}
 
 ------------------------------------------------------------------------
 
-# 1. Comprensión del problema y del dataset {#1-comprensión-del-problema-y-del-dataset}
+# 1. Comprensión del problema y del dataset 
 
-## 1.1 Contexto {#11-contexto}
+## 1.1 Contexto 
 
 El dataset **Adult** (también conocido como *Census Income*) fue
 extraído por Barry Becker de la base de datos del censo de EE. UU. de
@@ -171,7 +167,7 @@ tan fuertes y confiables son esas asociaciones?
 > personas. Toda asociación que reportamos es descriptiva y **no implica
 > causalidad**.
 
-## 1.2 Preguntas guía e hipótesis de trabajo {#12-preguntas-guía-e-hipótesis-de-trabajo}
+## 1.2 Preguntas guía e hipótesis de trabajo 
 
 Antes de mirar los datos formulamos hipótesis, que contrastaremos en la
 sección 13:
@@ -208,7 +204,7 @@ sección 13:
                                       ingreso.
   -----------------------------------------------------------------------
 
-## 1.3 Diccionario de datos {#13-diccionario-de-datos}
+## 1.3 Diccionario de datos 
 
   -----------------------------------------------------------------------
   Variable                Tipo                    Descripción
@@ -271,29 +267,27 @@ sección 13:
                                                   ingreso anual.
   -----------------------------------------------------------------------
 
-## 1.4 Cómo trabajamos como equipo {#14-cómo-trabajamos-como-equipo}
+## 1.4 Cómo trabajamos como equipo 
 
 Seguimos un ciclo corto inspirado en CRISP-DM: **comprender → auditar
 los datos → preparar → explorar → interpretar → recomendar**. Cada
 integrante aportó el lente de su profesión; esos lentes aparecen como
 recuadros *«Lente · ...»* a lo largo del documento y se consolidan en la
 sección 12.
-:::
 
-::: {#4429b9f2 .cell .markdown id="4429b9f2"}
 
 ------------------------------------------------------------------------
 
-# 2. Configuración del entorno {#2-configuración-del-entorno}
+# 2. Configuración del entorno 
 
 > **Lente · Diseño multimedia.** Usamos la paleta *Okabe-Ito*, pensada
 > para que se lea bien con daltonismo, y una codificación consistente:
 > azul = ingresos `<=50K`, naranja = ingresos `>50K`. Para otra variable
 > (el sexo) usamos otros colores, de modo que un mismo color nunca
 > signifique dos cosas.
-:::
 
-::: {#6e1912bd .cell .code execution_count="1" colab="{\"base_uri\":\"https://localhost:8080/\"}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:40.403244Z\",\"iopub.status.busy\":\"2026-10-30T00:03:40.402605Z\",\"iopub.status.idle\":\"2026-10-30T00:03:41.718584Z\",\"shell.execute_reply\":\"2026-10-30T00:03:41.717594Z\"}" id="6e1912bd" outputId="90206767-5c68-4904-d795-48e7a12c50fe"}
+
+
 ``` python
 # --- Librerías
 import pandas as pd                      # tablas de datos
@@ -323,16 +317,11 @@ pd.set_option("display.float_format", "{:,.2f}".format)
 print("pandas", pd.__version__, "| numpy", np.__version__, "| seaborn", sns.__version__)
 ```
 
-::: {.output .stream .stdout}
     pandas 2.2.3 | numpy 2.4.6 | seaborn 0.13.2
-:::
-:::
-
-::: {#0d6ad6b0 .cell .markdown id="0d6ad6b0"}
 
 ------------------------------------------------------------------------
 
-# 3. Obtención del dataset (cómo lo descargamos) {#3-obtención-del-dataset-cómo-lo-descargamos}
+# 3. Obtención del dataset (cómo lo descargamos) 
 
 El dataset **no viene precargado** en `scikit-learn`, `seaborn` ni en
 Python base: `scikit-learn` solo ofrece una función que lo descarga de
@@ -363,9 +352,7 @@ OpenML. Evaluamos tres rutas:
 documentación oficial de UCI (`adult.names`) y se escribieron en
 `snake_case`. Conservamos una copia intacta de los datos originales en
 `df_raw` y todo lo demás se hace sobre copias.
-:::
 
-::: {#e7cd3ee2 .cell .code execution_count="2" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":330}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:41.720828Z\",\"iopub.status.busy\":\"2026-10-30T00:03:41.720016Z\",\"iopub.status.idle\":\"2026-10-30T00:03:41.955214Z\",\"shell.execute_reply\":\"2026-10-30T00:03:41.954262Z\"}" id="e7cd3ee2" outputId="4dcb4f38-eb0e-4ed4-bb39-c056390f9470"}
 ``` python
 # Nombres de las 15 columnas (según la documentación de UCI; el archivo no trae encabezados)
 columnas = ["age", "workclass", "fnlwgt", "education", "education_num", "marital_status",
@@ -386,25 +373,19 @@ print(f"Dimensiones: {df_raw.shape[0]:,} filas × {df_raw.shape[1]} columnas")
 df_raw.head()
 ```
 
-::: {.output .stream .stdout}
     Dimensiones: 48,842 filas × 15 columnas
-:::
 
-::: {.output .execute_result execution_count="2"}
+
+
 ``` json
 {"summary":"{\n  \"name\": \"df_raw\",\n  \"rows\": 48842,\n  \"fields\": [\n    {\n      \"column\": \"age\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 13,\n        \"min\": 17,\n        \"max\": 90,\n        \"num_unique_values\": 74,\n        \"samples\": [\n          28,\n          73,\n          35\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"workclass\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 9,\n        \"samples\": [\n          \"Without-pay\",\n          \"Self-emp-not-inc\",\n          \"?\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"fnlwgt\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 105604,\n        \"min\": 12285,\n        \"max\": 1490400,\n        \"num_unique_values\": 28523,\n        \"samples\": [\n          159077,\n          199450,\n          181773\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"education\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 16,\n        \"samples\": [\n          \"Bachelors\",\n          \"HS-grad\",\n          \"Some-college\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"education_num\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 2,\n        \"min\": 1,\n        \"max\": 16,\n        \"num_unique_values\": 16,\n        \"samples\": [\n          13,\n          9,\n          10\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"marital_status\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 7,\n        \"samples\": [\n          \"Never-married\",\n          \"Married-civ-spouse\",\n          \"Married-AF-spouse\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"occupation\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 15,\n        \"samples\": [\n          \"Machine-op-inspct\",\n          \"?\",\n          \"Adm-clerical\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"relationship\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 6,\n        \"samples\": [\n          \"Not-in-family\",\n          \"Husband\",\n          \"Other-relative\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"race\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 5,\n        \"samples\": [\n          \"Black\",\n          \"Other\",\n          \"Asian-Pac-Islander\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"sex\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Female\",\n          \"Male\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"capital_gain\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 7452,\n        \"min\": 0,\n        \"max\": 99999,\n        \"num_unique_values\": 123,\n        \"samples\": [\n          2176,\n          10520\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"capital_loss\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 403,\n        \"min\": 0,\n        \"max\": 4356,\n        \"num_unique_values\": 99,\n        \"samples\": [\n          1974,\n          419\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"hours_per_week\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 12,\n        \"min\": 1,\n        \"max\": 99,\n        \"num_unique_values\": 96,\n        \"samples\": [\n          97,\n          88\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"native_country\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 42,\n        \"samples\": [\n          \"El-Salvador\",\n          \"Philippines\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"income\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \">50K\",\n          \"<=50K\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"df_raw"}
 ```
-:::
-:::
 
-::: {#f50ebac8 .cell .markdown id="f50ebac8"}
 **Lectura.** Obtuvimos **48,842 registros y 15 columnas**, que coinciden
 con la documentación oficial de UCI (32,561 de entrenamiento + 16,281 de
 prueba). Los datos originales quedan guardados en `df_raw` sin
 modificar, para poder auditar cada decisión de limpieza.
-:::
 
-::: {#2ff53e5d .cell .markdown id="2ff53e5d"}
 
 ------------------------------------------------------------------------
 
@@ -412,9 +393,7 @@ modificar, para poder auditar cada decisión de limpieza.
 
 Antes de limpiar nada revisamos la estructura general: tipos de dato,
 cantidad de valores distintos y un vistazo a los registros.
-:::
 
-::: {#dccca9a3 .cell .code execution_count="3" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":1000}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:41.957189Z\",\"iopub.status.busy\":\"2026-10-30T00:03:41.956974Z\",\"iopub.status.idle\":\"2026-10-30T00:03:42.011796Z\",\"shell.execute_reply\":\"2026-10-30T00:03:42.010849Z\"}" id="dccca9a3" outputId="03e2f3ad-33d7-4213-8784-a2c6aa4fe80b"}
 ``` python
 # Tipos de dato y valores no nulos
 df_raw.info()
@@ -427,7 +406,7 @@ print(df_raw.nunique())
 df_raw.sample(5, random_state=SEMILLA)
 ```
 
-::: {.output .stream .stdout}
+
     <class 'pandas.core.frame.DataFrame'>
     RangeIndex: 48842 entries, 0 to 48841
     Data columns (total 15 columns):
@@ -468,16 +447,11 @@ df_raw.sample(5, random_state=SEMILLA)
     native_country       42
     income                2
     dtype: int64
-:::
 
-::: {.output .execute_result execution_count="3"}
 ``` json
 {"summary":"{\n  \"name\": \"df_raw\",\n  \"rows\": 5,\n  \"fields\": [\n    {\n      \"column\": \"age\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 12,\n        \"min\": 17,\n        \"max\": 47,\n        \"num_unique_values\": 5,\n        \"samples\": [\n          17,\n          47,\n          25\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"workclass\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Local-gov\",\n          \"Private\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"fnlwgt\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 100625,\n        \"min\": 178953,\n        \"max\": 423024,\n        \"num_unique_values\": 5,\n        \"samples\": [\n          178953,\n          244025\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"education\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 3,\n        \"samples\": [\n          \"HS-grad\",\n          \"12th\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"education_num\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 8,\n        \"max\": 10,\n        \"num_unique_values\": 3,\n        \"samples\": [\n          9,\n          8\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"marital_status\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 1,\n        \"samples\": [\n          \"Never-married\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"occupation\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 4,\n        \"samples\": [\n          \"Sales\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"relationship\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 4,\n        \"samples\": [\n          \"Own-child\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"race\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 3,\n        \"samples\": [\n          \"White\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"sex\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Female\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"capital_gain\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 0,\n        \"max\": 0,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"capital_loss\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 0,\n        \"max\": 0,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"hours_per_week\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 15,\n        \"min\": 20,\n        \"max\": 56,\n        \"num_unique_values\": 4,\n        \"samples\": [\n          40\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"native_country\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Puerto-Rico\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"income\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 1,\n        \"samples\": [\n          \"<=50K\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe"}
 ```
-:::
-:::
 
-::: {#0d8548ec .cell .markdown id="0d8548ec"}
 **Lectura.**
 
 -   Hay **6 variables numéricas** (`age`, `fnlwgt`, `education_num`,
@@ -490,22 +464,18 @@ df_raw.sample(5, random_state=SEMILLA)
     parecen representar **la misma información** y lo verificaremos.
 -   `fnlwgt` tiene decenas de miles de valores distintos: no es una
     característica de la persona sino un **peso de muestreo**.
-:::
 
-::: {#9e0eda06 .cell .markdown id="9e0eda06"}
 
 ------------------------------------------------------------------------
 
-# 5. Evaluación de la calidad de los datos {#5-evaluación-de-la-calidad-de-los-datos}
+# 5. Evaluación de la calidad de los datos 
 
 Auditamos cinco aspectos: **datos faltantes**, **duplicados**,
 **inconsistencias**, **valores atípicos o truncados** y **balance** de
 la variable objetivo.
 
-## 5.1 Datos faltantes {#51-datos-faltantes}
-:::
+## 5.1 Datos faltantes 
 
-::: {#f1825a6e .cell .code execution_count="4" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":1000}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:42.013362Z\",\"iopub.status.busy\":\"2026-10-30T00:03:42.013184Z\",\"iopub.status.idle\":\"2026-10-30T00:03:42.255997Z\",\"shell.execute_reply\":\"2026-10-30T00:03:42.254911Z\"}" id="f1825a6e" outputId="7cafe044-82bc-4a26-9000-6c9bdc29ea27"}
 ``` python
 # (a) Contamos cuántas veces aparece el "?" en las columnas de texto
 cols_texto = df_raw.select_dtypes(exclude="number").columns
@@ -552,7 +522,7 @@ plt.xlabel("% de registros con dato faltante")
 plt.show()
 ```
 
-::: {.output .stream .stdout}
+
     Cantidad de '?' por columna (solo las que tienen):
     workclass         2799
     occupation        2809
@@ -560,25 +530,17 @@ plt.show()
     dtype: int64
 
     Resumen de faltantes:
-:::
 
-::: {.output .display_data}
 ``` json
 {"summary":"{\n  \"name\": \"tabla_faltantes\",\n  \"rows\": 3,\n  \"fields\": [\n    {\n      \"column\": \"n_faltantes\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1124,\n        \"min\": 857,\n        \"max\": 2809,\n        \"num_unique_values\": 3,\n        \"samples\": [\n          2799,\n          2809,\n          857\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"% del total\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 2.301527566550676,\n        \"min\": 1.7546374022357807,\n        \"max\": 5.751197739650301,\n        \"num_unique_values\": 3,\n        \"samples\": [\n          5.7307235575938735,\n          5.751197739650301,\n          1.7546374022357807\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"tabla_faltantes"}
 ```
-:::
 
-::: {.output .stream .stdout}
     Cruce de faltantes (workclass × occupation):
-:::
 
-::: {.output .display_data}
 ``` json
 {"summary":"{\n  \"name\": \"plt\",\n  \"rows\": 2,\n  \"fields\": [\n    {\n      \"column\": \"workclass falta\",\n      \"properties\": {\n        \"dtype\": \"boolean\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          true,\n          false\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": false,\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 32550,\n        \"min\": 0,\n        \"max\": 46033,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          0,\n          46033\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": true,\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1972,\n        \"min\": 10,\n        \"max\": 2799,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          2799,\n          10\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe"}
 ```
-:::
 
-::: {.output .stream .stdout}
     Casos con ocupación faltante y workclass presente:
     workclass
     Never-worked    10
@@ -596,14 +558,9 @@ plt.show()
     native_country             
     False           76.10 23.90
     True            74.33 25.67
-:::
 
-::: {.output .display_data}
 ![](vertopal_08062244d02c4ab08df2fb5ca7b96803/5938a7632ac67fd17b94665a689250249ce66ddf.png)
-:::
-:::
 
-::: {#b499de9f .cell .markdown id="b499de9f"}
 **Interpretación.**
 
 -   Los faltantes están en **`workclass` (2,799), `occupation` (2,809) y
@@ -627,10 +584,8 @@ plt.show()
 con la moda. Se crea la categoría explícita **`"No reporta"`**, que
 conserva la información de que el dato no fue declarado.
 
-## 5.2 Registros duplicados {#52-registros-duplicados}
-:::
+## 5.2 Registros duplicados 
 
-::: {#b2c1ebe9 .cell .code execution_count="5" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":448}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:42.258112Z\",\"iopub.status.busy\":\"2026-10-30T00:03:42.257500Z\",\"iopub.status.idle\":\"2026-10-30T00:03:42.374094Z\",\"shell.execute_reply\":\"2026-10-30T00:03:42.372978Z\"}" id="b2c1ebe9" outputId="b8476d9f-659e-4b9d-8bbb-418929111e6c"}
 ``` python
 # Filas idénticas en las 15 columnas
 duplicadas = df_nan.duplicated()
@@ -648,27 +603,20 @@ print(f"Tasa de ingresos altos SIN duplicados: {tasa_sin:.3f} %")
 print(f"Diferencia: {abs(tasa_con - tasa_sin):.3f} puntos porcentuales")
 ```
 
-::: {.output .stream .stdout}
+
     Filas duplicadas: 52 (0.11% del total)
 
     Ejemplos:
-:::
 
-::: {.output .display_data}
 ``` json
 {"summary":"{\n  \"name\": \"print(f\\\"Diferencia: {abs(tasa_con - tasa_sin):\",\n  \"rows\": 6,\n  \"fields\": [\n    {\n      \"column\": \"age\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 17,\n        \"max\": 19,\n        \"num_unique_values\": 3,\n        \"samples\": [\n          17,\n          18,\n          19\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"workclass\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Self-emp-inc\",\n          \"Private\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"fnlwgt\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 132953,\n        \"min\": 97261,\n        \"max\": 378036,\n        \"num_unique_values\": 3,\n        \"samples\": [\n          153021,\n          378036\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"education\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"HS-grad\",\n          \"12th\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"education_num\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 8,\n        \"max\": 9,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          9,\n          8\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"marital_status\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 1,\n        \"samples\": [\n          \"Never-married\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"occupation\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Farming-fishing\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"relationship\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Not-in-family\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"race\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 1,\n        \"samples\": [\n          \"White\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"sex\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Male\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"capital_gain\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 0,\n        \"max\": 0,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"capital_loss\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 0,\n        \"max\": 0,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"hours_per_week\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 13,\n        \"min\": 10,\n        \"max\": 40,\n        \"num_unique_values\": 3,\n        \"samples\": [\n          20\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"native_country\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 1,\n        \"samples\": [\n          \"United-States\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"income\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 1,\n        \"samples\": [\n          \"<=50K\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe"}
 ```
-:::
 
-::: {.output .stream .stdout}
 
     Tasa de ingresos altos CON duplicados: 23.928 %
     Tasa de ingresos altos SIN duplicados: 23.941 %
     Diferencia: 0.013 puntos porcentuales
-:::
-:::
 
-::: {#e16c5be9 .cell .markdown id="e16c5be9"}
 **Interpretación.** Hay **52 filas duplicadas** (0.11 %). Como el
 archivo no tiene identificador de persona, no podemos saber con certeza
 si son errores de captura o personas distintas con perfiles idénticos.
@@ -677,10 +625,8 @@ Dado que coinciden en las **15 variables a la vez** y que su impacto es
 porcentuales), adoptamos el criterio conservador de **eliminarlos**:
 evita inflar perfiles repetidos y no altera ninguna conclusión.
 
-## 5.3 Inconsistencias y valores truncados {#53-inconsistencias-y-valores-truncados}
-:::
+## 5.3 Inconsistencias y valores truncados 
 
-::: {#fa76428f .cell .code execution_count="6" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":911}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:42.376114Z\",\"iopub.status.busy\":\"2026-10-30T00:03:42.375471Z\",\"iopub.status.idle\":\"2026-10-30T00:03:42.538946Z\",\"shell.execute_reply\":\"2026-10-30T00:03:42.538041Z\"}" id="fa76428f" outputId="1835458d-aad2-492b-fb1b-e645892db6b0"}
 ``` python
 # (a) Espacios sobrantes en el texto y valores de la variable objetivo
 sobrantes = {c: (df_nan[c].dropna() != df_nan[c].dropna().str.strip()).sum() for c in cols_texto}
@@ -707,7 +653,7 @@ print("\nHoras por semana: los 6 valores más frecuentes (proporción)")
 print(df_nan["hours_per_week"].value_counts(normalize=True).head(6))
 ```
 
-::: {.output .stream .stdout}
+
     Celdas con espacios sobrantes: 0
     Valores de income: ['<=50K' '>50K']
 
@@ -729,15 +675,11 @@ print(df_nan["hours_per_week"].value_counts(normalize=True).head(6))
     14         Masters
     15     Prof-school
     16       Doctorate
-:::
 
-::: {.output .display_data}
 ``` json
 {"summary":"{\n  \"name\": \"print(df_nan[\\\"hours_per_week\\\"]\",\n  \"rows\": 6,\n  \"fields\": [\n    {\n      \"column\": \"relationship\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 6,\n        \"samples\": [\n          \"Husband\",\n          \"Not-in-family\",\n          \"Wife\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"Female\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 2167,\n        \"min\": 1,\n        \"max\": 5870,\n        \"num_unique_values\": 6,\n        \"samples\": [\n          1,\n          5870,\n          2328\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"Male\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 7427,\n        \"min\": 3,\n        \"max\": 19715,\n        \"num_unique_values\": 6,\n        \"samples\": [\n          19715,\n          6713,\n          3\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe"}
 ```
-:::
 
-::: {.output .stream .stdout}
 
     Edad máxima: 90 | personas con 90 años: 55
     Horas máximas: 99 | personas con 99 h: 137
@@ -754,10 +696,7 @@ print(df_nan["hours_per_week"].value_counts(normalize=True).head(6))
     35   0.04
     20   0.04
     Name: proportion, dtype: float64
-:::
-:::
 
-::: {#08583ff7 .cell .markdown id="08583ff7"}
 **Interpretación y decisiones.**
 
   -------------------------------------------------------------------------
@@ -808,9 +747,7 @@ print(df_nan["hours_per_week"].value_counts(normalize=True).head(6))
   -------------------------------------------------------------------------
 
 ## 5.4 Valores atípicos (*outliers*) {#54-valores-atípicos-outliers}
-:::
 
-::: {#030a1bf0 .cell .code execution_count="7" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":511}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:42.541332Z\",\"iopub.status.busy\":\"2026-10-30T00:03:42.540625Z\",\"iopub.status.idle\":\"2026-10-30T00:03:43.099044Z\",\"shell.execute_reply\":\"2026-10-30T00:03:43.098023Z\"}" id="030a1bf0" outputId="3efa52a0-41aa-4722-db6a-8bae2930f0f0"}
 ``` python
 # Regla del rango intercuartílico (IQR): atípico = más de 1.5 IQR por debajo de Q1 o por encima de Q3
 numericas = ["age", "fnlwgt", "education_num", "capital_gain", "capital_loss", "hours_per_week"]
@@ -834,18 +771,13 @@ plt.tight_layout()
 plt.show()
 ```
 
-::: {.output .display_data}
+
 ``` json
 {"summary":"{\n  \"name\": \"tabla_atipicos\",\n  \"rows\": 6,\n  \"fields\": [\n    {\n      \"column\": \"Q1\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 47983.506310415316,\n        \"min\": 0.0,\n        \"max\": 117550.5,\n        \"num_unique_values\": 5,\n        \"samples\": [\n          117550.5,\n          40.0,\n          9.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"Q3\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 97008.36936625623,\n        \"min\": 0.0,\n        \"max\": 237642.0,\n        \"num_unique_values\": 5,\n        \"samples\": [\n          237642.0,\n          45.0,\n          12.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"n_at\\u00edpicos\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 4872,\n        \"min\": 216,\n        \"max\": 13496,\n        \"num_unique_values\": 6,\n        \"samples\": [\n          216,\n          1453,\n          13496\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"% at\\u00edpicos\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 9.976273039633599,\n        \"min\": 0.4422423324188199,\n        \"max\": 27.631956103353673,\n        \"num_unique_values\": 6,\n        \"samples\": [\n          0.4422423324188199,\n          2.974898652798821,\n          27.631956103353673\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"tabla_atipicos"}
 ```
-:::
 
-::: {.output .display_data}
 ![](vertopal_08062244d02c4ab08df2fb5ca7b96803/873526b2a08a89d1869778e40203363ee8395a5a.png)
-:::
-:::
 
-::: {#d932974c .cell .markdown id="d932974c"}
 **Interpretación.**
 
 -   `hours_per_week` marca más de **13,000 atípicos (≈28 %)**: parece
@@ -872,10 +804,8 @@ logaritmo para el capital y marcamos los valores truncados.
 > señal saturada. La solución es la misma: detectar la saturación,
 > **marcarla** y no promediarla como dato válido.
 
-## 5.5 Balance de la variable objetivo {#55-balance-de-la-variable-objetivo}
-:::
+## 5.5 Balance de la variable objetivo
 
-::: {#876b980d .cell .code execution_count="8" colab="{\"base_uri\":\"https://localhost:8080/\"}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:43.101159Z\",\"iopub.status.busy\":\"2026-10-30T00:03:43.100551Z\",\"iopub.status.idle\":\"2026-10-30T00:03:43.110927Z\",\"shell.execute_reply\":\"2026-10-30T00:03:43.110152Z\"}" id="876b980d" outputId="4d14a7c2-7537-4272-995e-7e316449d333"}
 ``` python
 conteo = df_nan["income"].value_counts()
 print(conteo)
@@ -883,7 +813,7 @@ print(f"\nProporción: {conteo['<=50K'] / conteo.sum():.1%} (<=50K) vs {conteo['
 print(f"Razón de desbalance: {conteo['<=50K'] / conteo['>50K']:.2f} a 1")
 ```
 
-::: {.output .stream .stdout}
+
     income
     <=50K    37155
     >50K     11687
@@ -891,10 +821,7 @@ print(f"Razón de desbalance: {conteo['<=50K'] / conteo['>50K']:.2f} a 1")
 
     Proporción: 76.1% (<=50K) vs 23.9% (>50K)
     Razón de desbalance: 3.18 a 1
-:::
-:::
 
-::: {#8b76a151 .cell .markdown id="8b76a151"}
 **Scorecard de calidad (resumen de la auditoría):**
 
   ------------------------------------------------------------------------------
@@ -934,7 +861,7 @@ print(f"Razón de desbalance: {conteo['<=50K'] / conteo['>50K']:.2f} a 1")
 
 ------------------------------------------------------------------------
 
-# 6. Limpieza y transformación {#6-limpieza-y-transformación}
+# 6. Limpieza y transformación 
 
 Aplicamos las decisiones de la sección 5 **paso a paso**, cada una en su
 propia celda y con comentarios, para que cualquiera pueda seguir y
@@ -986,9 +913,7 @@ repetir el proceso.
   `flag_tope_edad`,       Indicadores de valores  Evita tratarlos como
   `flag_tope_capital`     truncados               mediciones reales
   --------------------------------------------------------------------------
-:::
 
-::: {#f320ec47 .cell .code execution_count="9" colab="{\"base_uri\":\"https://localhost:8080/\"}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:43.113009Z\",\"iopub.status.busy\":\"2026-10-30T00:03:43.112417Z\",\"iopub.status.idle\":\"2026-10-30T00:03:43.193649Z\",\"shell.execute_reply\":\"2026-10-30T00:03:43.192364Z\"}" id="f320ec47" outputId="aa696a9e-6d5d-4ee7-db7c-fafe8bd5dbc0"}
 ``` python
 # Paso 1. Copia de trabajo y eliminación de duplicados
 df = df_nan.copy()
@@ -1010,12 +935,9 @@ df["pregrado_o_mas"] = (df["education_num"] >= 13).astype(int)
 print("Pasos 1-4 listos:", df.shape)
 ```
 
-::: {.output .stream .stdout}
-    Pasos 1-4 listos: (48790, 20)
-:::
-:::
 
-::: {#3e7fa499 .cell .code execution_count="10" colab="{\"base_uri\":\"https://localhost:8080/\"}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:43.195743Z\",\"iopub.status.busy\":\"2026-10-30T00:03:43.195105Z\",\"iopub.status.idle\":\"2026-10-30T00:03:43.210107Z\",\"shell.execute_reply\":\"2026-10-30T00:03:43.209163Z\"}" id="3e7fa499" outputId="f2531a48-cefb-4b4d-f836-a8fbba2c2b75"}
+    Pasos 1-4 listos: (48790, 20)
+
 ``` python
 # Paso 5. Grupos ordenados con pd.cut (los límites son los "bins")
 niveles = ["1. Sin diploma", "2. Bachiller", "3. Técnico / univ. incompleta", "4. Pregrado", "5. Posgrado"]
@@ -1030,17 +952,14 @@ df["grupo_horas"] = pd.cut(df["hours_per_week"], bins=[0, 19, 34, 40, 49, 60, 10
 print(df[["education_num", "nivel_educativo", "age", "grupo_edad", "hours_per_week", "grupo_horas"]].head(5))
 ```
 
-::: {.output .stream .stdout}
+
        education_num nivel_educativo  age grupo_edad  hours_per_week grupo_horas
     0             13     4. Pregrado   39      35-44              40       35-40
     1             13     4. Pregrado   50      45-54              13         ≤19
     2              9    2. Bachiller   38      35-44              40       35-40
     3              7  1. Sin diploma   53      45-54              40       35-40
     4             13     4. Pregrado   28      25-34              40       35-40
-:::
-:::
 
-::: {#ff8a85b6 .cell .code execution_count="11" colab="{\"base_uri\":\"https://localhost:8080/\"}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:43.211683Z\",\"iopub.status.busy\":\"2026-10-30T00:03:43.211484Z\",\"iopub.status.idle\":\"2026-10-30T00:03:43.240695Z\",\"shell.execute_reply\":\"2026-10-30T00:03:43.239760Z\"}" id="ff8a85b6" outputId="c11eeb74-bdd7-43ea-d2e8-e822ab9f18fb"}
 ``` python
 # Paso 6. Familias de ocupación (diccionario: ocupación original -> familia)
 familias = {
@@ -1075,7 +994,6 @@ print(df["tipo_ocupacion"].value_counts())
 print(df["categoria_capital"].value_counts())
 ```
 
-::: {.output .stream .stdout}
     tipo_ocupacion
     Operativo / Obrero                   15030
     Administrativo / Ventas / Técnico    12552
@@ -1090,10 +1008,7 @@ print(df["categoria_capital"].value_counts())
     Pérdida              2282
     Ganancia < 5,000     1584
     Name: count, dtype: int64
-:::
-:::
 
-::: {#8d3dd4d4 .cell .code execution_count="12" colab="{\"base_uri\":\"https://localhost:8080/\"}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:43.242628Z\",\"iopub.status.busy\":\"2026-10-30T00:03:43.242020Z\",\"iopub.status.idle\":\"2026-10-30T00:03:43.355816Z\",\"shell.execute_reply\":\"2026-10-30T00:03:43.354573Z\"}" id="8d3dd4d4" outputId="78693d76-2f76-458b-f43c-e565fee155a1"}
 ``` python
 # Paso 10. Validación automática: si alguna regla falla, el notebook se detiene con un error
 assert df.duplicated().sum() == 0,                         "Quedan filas duplicadas"
@@ -1112,15 +1027,11 @@ print(f"Después: {df.shape[0]:,} filas × {df.shape[1]} columnas")
 print(f"Tasa global de ingresos altos: {df['ingreso_alto'].mean():.2%}")
 ```
 
-::: {.output .stream .stdout}
     Todas las validaciones pasaron
     Antes : 48,842 filas × 15 columnas
     Después: 48,790 filas × 29 columnas
     Tasa global de ingresos altos: 23.94%
-:::
-:::
 
-::: {#bcfe2844 .cell .markdown id="bcfe2844"}
 **Lectura.** Las 9 validaciones pasan: el conjunto limpio tiene **48,790
 filas, 0 nulos, objetivo binario y todas las variables derivadas
 completas**. La tasa global de ingresos altos es **23.94 %**.
@@ -1129,22 +1040,18 @@ completas**. La tasa global de ingresos altos es **23.94 %**.
 censo, no una característica de la persona. Analizamos el dato **sin
 ponderar** y verificamos en la sección 7.3 que ponderar no cambia las
 conclusiones.
-:::
 
-::: {#b578598a .cell .markdown id="b578598a"}
 
 ------------------------------------------------------------------------
 
-# 7. Estadística descriptiva {#7-estadística-descriptiva}
+# 7. Estadística descriptiva 
 
-## 7.1 Variables numéricas {#71-variables-numéricas}
+## 7.1 Variables numéricas 
 
 Además de la media y la desviación estándar reportamos la **mediana** y
 la **asimetría**, porque la media sola engaña en distribuciones sesgadas
 (como el capital).
-:::
 
-::: {#6fabe086 .cell .code execution_count="13" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":595}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:43.357583Z\",\"iopub.status.busy\":\"2026-10-30T00:03:43.357417Z\",\"iopub.status.idle\":\"2026-10-30T00:03:43.413724Z\",\"shell.execute_reply\":\"2026-10-30T00:03:43.412715Z\"}" id="6fabe086" outputId="c1c9d003-0cf7-463b-e070-c1b089c056ff"}
 ``` python
 cols_num = ["age", "education_num", "hours_per_week", "capital_gain", "capital_loss", "fnlwgt"]
 
@@ -1165,38 +1072,26 @@ print("Media por grupo de ingreso:")
 display(df.groupby("income")[cols_num].mean())
 ```
 
-::: {.output .display_data}
 ``` json
 {"summary":"{\n  \"name\": \"resumen\",\n  \"rows\": 6,\n  \"fields\": [\n    {\n      \"column\": \"count\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0.0,\n        \"min\": 48790.0,\n        \"max\": 48790.0,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          48790.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"mean\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 77330.52792903177,\n        \"min\": 10.07880713260914,\n        \"max\": 189668.9993646239,\n        \"num_unique_values\": 6,\n        \"samples\": [\n          38.652797704447636\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"std\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 42575.865206581984,\n        \"min\": 2.570045938993381,\n        \"max\": 105617.23123203602,\n        \"num_unique_values\": 6,\n        \"samples\": [\n          13.708492897985094\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"min\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 5013.783268816739,\n        \"min\": 0.0,\n        \"max\": 12285.0,\n        \"num_unique_values\": 4,\n        \"samples\": [\n          1.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"25%\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 47985.34342762035,\n        \"min\": 0.0,\n        \"max\": 117555.0,\n        \"num_unique_values\": 5,\n        \"samples\": [\n          9.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"50%\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 72717.6367092262,\n        \"min\": 0.0,\n        \"max\": 178138.5,\n        \"num_unique_values\": 5,\n        \"samples\": [\n          10.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"75%\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 96993.77449022394,\n        \"min\": 0.0,\n        \"max\": 237606.25,\n        \"num_unique_values\": 5,\n        \"samples\": [\n          12.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"max\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 601220.1015646987,\n        \"min\": 16.0,\n        \"max\": 1490400.0,\n        \"num_unique_values\": 6,\n        \"samples\": [\n          90.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"asimetr\\u00eda\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 4.657072840425274,\n        \"min\": -0.3142292065096316,\n        \"max\": 11.888264821933397,\n        \"num_unique_values\": 6,\n        \"samples\": [\n          0.5565823218330223\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"resumen"}
 ```
-:::
 
-::: {.output .stream .stdout}
     Sin ganancias de capital (capital_gain = 0): 91.7%
     Sin pérdidas de capital (capital_loss = 0) : 95.3%
     Trabajan exactamente 40 horas             : 46.7%
 
     Mediana por grupo de ingreso:
-:::
 
-::: {.output .display_data}
 ``` json
 {"summary":"{\n  \"name\": \"display(df\",\n  \"rows\": 2,\n  \"fields\": [\n    {\n      \"column\": \"income\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \">50K\",\n          \"<=50K\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"age\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 6.363961030678928,\n        \"min\": 34.0,\n        \"max\": 43.0,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          43.0,\n          34.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"education_num\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 2.1213203435596424,\n        \"min\": 9.0,\n        \"max\": 12.0,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          12.0,\n          9.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"hours_per_week\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0.0,\n        \"min\": 40.0,\n        \"max\": 40.0,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          40.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"capital_gain\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0.0,\n        \"min\": 0.0,\n        \"max\": 0.0,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          0.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"capital_loss\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0.0,\n        \"min\": 0.0,\n        \"max\": 0.0,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          0.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"fnlwgt\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1472.196318430392,\n        \"min\": 176729.0,\n        \"max\": 178811.0,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          176729.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe"}
 ```
-:::
 
-::: {.output .stream .stdout}
     Media por grupo de ingreso:
-:::
 
-::: {.output .display_data}
 ``` json
 {"summary":"{\n  \"name\": \"display(df\",\n  \"rows\": 2,\n  \"fields\": [\n    {\n      \"column\": \"income\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \">50K\",\n          \"<=50K\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"age\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 5.227819297128325,\n        \"min\": 36.88275081516613,\n        \"max\": 44.27600376680079,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          44.27600376680079,\n          36.88275081516613\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"education_num\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1.4172888594420152,\n        \"min\": 9.598938262955079,\n        \"max\": 11.603287389778272,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          11.603287389778272,\n          9.598938262955079\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"hours_per_week\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 4.675113042502279,\n        \"min\": 38.842976097442666,\n        \"max\": 45.45458436777673,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          45.45458436777673,\n          38.842976097442666\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"capital_gain\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 2755.682292121323,\n        \"min\": 147.19254089304482,\n        \"max\": 4044.3158120023973,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          4044.3158120023973,\n          147.19254089304482\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"capital_loss\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 98.57727092731243,\n        \"min\": 54.21905737152712,\n        \"max\": 193.62837085865937,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          193.62837085865937,\n          54.21905737152712\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"fnlwgt\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1104.1405278704497,\n        \"min\": 188481.35125417344,\n        \"max\": 190042.84176345362,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          188481.35125417344,\n          190042.84176345362\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe"}
 ```
-:::
-:::
 
-::: {#9facf1ad .cell .markdown id="9facf1ad"}
 **Interpretación.**
 
 -   **`age`:** media 38.7 y mediana 37 años; distribución casi simétrica
@@ -1224,10 +1119,8 @@ display(df.groupby("income")[cols_num].mean())
     casi idénticos (medianas ≈ 178,800 vs 176,700), una primera pista de
     que no se relaciona con el ingreso.
 
-## 7.2 Variables categóricas {#72-variables-categóricas}
-:::
+## 7.2 Variables categóricas 
 
-::: {#75857c18 .cell .code execution_count="14" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":1000}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:43.415761Z\",\"iopub.status.busy\":\"2026-10-30T00:03:43.415125Z\",\"iopub.status.idle\":\"2026-10-30T00:03:43.556490Z\",\"shell.execute_reply\":\"2026-10-30T00:03:43.555566Z\"}" id="75857c18" outputId="e1ccd3f2-1cc9-420a-d323-e6f6385b78a5"}
 ``` python
 # Para cada variable: cuántas personas hay, qué % representan y qué % tiene ingresos altos
 for col in ["sex", "race", "marital_status", "workclass", "nivel_educativo", "tipo_ocupacion", "origen"]:
@@ -1240,78 +1133,51 @@ for col in ["sex", "race", "marital_status", "workclass", "nivel_educativo", "ti
     display(tabla)
 ```
 
-::: {.output .stream .stdout}
-    --- sex
-:::
 
-::: {.output .display_data}
+    --- sex
+
+
+
 ``` json
 {"summary":"{\n  \"name\": \"tabla\",\n  \"rows\": 2,\n  \"fields\": [\n    {\n      \"column\": \"sex\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Male\",\n          \"Female\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"n\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 11623,\n        \"min\": 16176,\n        \"max\": 32614,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          32614,\n          16176\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"% de la muestra\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 23.82336804497739,\n        \"min\": 33.154334904693584,\n        \"max\": 66.84566509530642,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          66.84566509530642,\n          33.154334904693584\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"% con ingresos >50K\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 13.757400066865793,\n        \"min\": 10.93595450049456,\n        \"max\": 30.39185625804869,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          30.39185625804869,\n          10.93595450049456\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"tabla"}
 ```
-:::
 
-::: {.output .stream .stdout}
     --- race
-:::
 
-::: {.output .display_data}
 ``` json
 {"summary":"{\n  \"name\": \"tabla\",\n  \"rows\": 5,\n  \"fields\": [\n    {\n      \"column\": \"race\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 5,\n        \"samples\": [\n          \"Asian-Pac-Islander\",\n          \"White\",\n          \"Black\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"n\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 17948,\n        \"min\": 406,\n        \"max\": 41714,\n        \"num_unique_values\": 5,\n        \"samples\": [\n          1517,\n          41714,\n          4683\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"% de la muestra\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 36.787078496819255,\n        \"min\": 0.8321377331420373,\n        \"max\": 85.4970280795245,\n        \"num_unique_values\": 5,\n        \"samples\": [\n          3.1092436974789917,\n          85.4970280795245,\n          9.598278335724533\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"% con ingresos >50K\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 7.774160978076039,\n        \"min\": 11.702127659574469,\n        \"max\": 26.961107448912326,\n        \"num_unique_values\": 5,\n        \"samples\": [\n          26.961107448912326,\n          25.413530229659106,\n          12.086269485372624\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"tabla"}
 ```
-:::
 
-::: {.output .stream .stdout}
     --- marital_status
-:::
 
-::: {.output .display_data}
 ``` json
 {"summary":"{\n  \"name\": \"tabla\",\n  \"rows\": 7,\n  \"fields\": [\n    {\n      \"column\": \"marital_status\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 7,\n        \"samples\": [\n          \"Divorced\",\n          \"Married-AF-spouse\",\n          \"Separated\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"n\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 8829,\n        \"min\": 37,\n        \"max\": 22366,\n        \"num_unique_values\": 7,\n        \"samples\": [\n          6630,\n          37,\n          1530\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"% de la muestra\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 18.09769239083781,\n        \"min\": 0.07583521213363394,\n        \"max\": 45.84136093461775,\n        \"num_unique_values\": 7,\n        \"samples\": [\n          13.588850174216027,\n          0.07583521213363394,\n          3.1358885017421603\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"% con ingresos >50K\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 16.544778746886994,\n        \"min\": 4.557890809600796,\n        \"max\": 44.61235804345882,\n        \"num_unique_values\": 7,\n        \"samples\": [\n          10.120663650075414,\n          37.83783783783784,\n          6.470588235294118\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"tabla"}
 ```
-:::
 
-::: {.output .stream .stdout}
     --- workclass
-:::
 
-::: {.output .display_data}
 ``` json
 {"summary":"{\n  \"name\": \"tabla\",\n  \"rows\": 9,\n  \"fields\": [\n    {\n      \"column\": \"workclass\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 9,\n        \"samples\": [\n          \"State-gov\",\n          \"Local-gov\",\n          \"Self-emp-inc\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"n\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 10743,\n        \"min\": 10,\n        \"max\": 33860,\n        \"num_unique_values\": 9,\n        \"samples\": [\n          1981,\n          3136,\n          1694\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"% de la muestra\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 22.02012263083241,\n        \"min\": 0.020496003279360527,\n        \"max\": 69.39946710391473,\n        \"num_unique_values\": 9,\n        \"samples\": [\n          4.06025824964132,\n          6.42754662840746,\n          3.472022955523673\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"% con ingresos >50K\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 16.83732456739374,\n        \"min\": 0.0,\n        \"max\": 55.37190082644628,\n        \"num_unique_values\": 9,\n        \"samples\": [\n          26.754164563351843,\n          29.559948979591837,\n          55.37190082644628\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"tabla"}
 ```
-:::
 
-::: {.output .stream .stdout}
     --- nivel_educativo
-:::
 
-::: {.output .display_data}
 ``` json
 {"summary":"{\n  \"name\": \"tabla\",\n  \"rows\": 5,\n  \"fields\": [\n    {\n      \"column\": \"nivel_educativo\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 5,\n        \"samples\": [\n          \"2. Bachiller\",\n          \"5. Posgrado\",\n          \"3. T\\u00e9cnico / univ. incompleta\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"n\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 5132,\n        \"min\": 4084,\n        \"max\": 15770,\n        \"num_unique_values\": 5,\n        \"samples\": [\n          15770,\n          4084,\n          14524\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"% de la muestra\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 10.520115620238066,\n        \"min\": 8.370567739290838,\n        \"max\": 32.32219717155155,\n        \"num_unique_values\": 5,\n        \"samples\": [\n          32.32219717155155,\n          8.370567739290838,\n          29.76839516294323\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"% con ingresos >50K\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 22.27881523608286,\n        \"min\": 5.719643694327239,\n        \"max\": 61.385896180215475,\n        \"num_unique_values\": 5,\n        \"samples\": [\n          15.859226379201015,\n          61.385896180215475,\n          20.62792619113192\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"tabla"}
 ```
-:::
 
-::: {.output .stream .stdout}
     --- tipo_ocupacion
-:::
 
-::: {.output .display_data}
 ``` json
 {"summary":"{\n  \"name\": \"tabla\",\n  \"rows\": 6,\n  \"fields\": [\n    {\n      \"column\": \"tipo_ocupacion\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 6,\n        \"samples\": [\n          \"Administrativo / Ventas / T\\u00e9cnico\",\n          \"Directivo / Profesional\",\n          \"Servicios\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"n\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 6037,\n        \"min\": 15,\n        \"max\": 15030,\n        \"num_unique_values\": 6,\n        \"samples\": [\n          12552,\n          12247,\n          6141\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"% de la muestra\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 12.375198492977347,\n        \"min\": 0.030744004919040786,\n        \"max\": 30.80549292887887,\n        \"num_unique_values\": 6,\n        \"samples\": [\n          25.726583316253333,\n          25.101455216232832,\n          12.586595613855298\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"% con ingresos >50K\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 14.783721689071651,\n        \"min\": 8.386256310047223,\n        \"max\": 46.44402710867968,\n        \"num_unique_values\": 6,\n        \"samples\": [\n          21.2157425111536,\n          46.44402710867968,\n          8.386256310047223\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"tabla"}
 ```
-:::
 
-::: {.output .stream .stdout}
     --- origen
-:::
 
-::: {.output .display_data}
 ``` json
 {"summary":"{\n  \"name\": \"tabla\",\n  \"rows\": 3,\n  \"fields\": [\n    {\n      \"column\": \"origen\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 3,\n        \"samples\": [\n          \"Estados Unidos\",\n          \"No reporta\",\n          \"Otro pa\\u00eds\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"n\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 23897,\n        \"min\": 856,\n        \"max\": 43792,\n        \"num_unique_values\": 3,\n        \"samples\": [\n          43792,\n          856,\n          4142\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"% de la muestra\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 48.979447258038114,\n        \"min\": 1.754457880713261,\n        \"max\": 89.75609756097562,\n        \"num_unique_values\": 3,\n        \"samples\": [\n          89.75609756097562,\n          1.754457880713261,\n          8.48944455831113\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"% con ingresos >50K\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 3.7462692829269186,\n        \"min\": 18.66248189280541,\n        \"max\": 25.700934579439252,\n        \"num_unique_values\": 3,\n        \"samples\": [\n          24.40628425283157,\n          25.700934579439252,\n          18.66248189280541\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"tabla"}
 ```
-:::
-:::
 
-::: {#44becf43 .cell .markdown id="44becf43"}
 **Interpretación.**
 
 -   **Composición de la muestra:** 66.8 % hombres y 33.2 % mujeres; 85.5
@@ -1332,10 +1198,8 @@ for col in ["sex", "race", "marital_status", "workclass", "nivel_educativo", "ti
     44.6 % de las personas casadas vs 4.6 % de quienes nunca se
     casaron), lo que desarrollaremos en las secciones 9 y 10.
 
-## 7.3 La variable objetivo y la prueba de sensibilidad con el peso muestral {#73-la-variable-objetivo-y-la-prueba-de-sensibilidad-con-el-peso-muestral}
-:::
+## 7.3 La variable objetivo y la prueba de sensibilidad con el peso muestral 
 
-::: {#6816cd48 .cell .code execution_count="15" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":579}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:43.558437Z\",\"iopub.status.busy\":\"2026-10-30T00:03:43.557823Z\",\"iopub.status.idle\":\"2026-10-30T00:03:43.664665Z\",\"shell.execute_reply\":\"2026-10-30T00:03:43.663569Z\"}" id="6816cd48" outputId="ff9e2cc4-8942-43a1-9cb4-f37a01fc649e"}
 ``` python
 # Tasa de ingresos altos sin ponderar y ponderada con fnlwgt
 tasa_simple = df["ingreso_alto"].mean() * 100
@@ -1361,25 +1225,20 @@ plt.ylabel("Personas")
 plt.show()
 ```
 
-::: {.output .stream .stdout}
+
     Sin ponderar: 23.94 %
     Ponderada con fnlwgt: 23.79 %
 
     Por sexo (%):
-:::
 
-::: {.output .display_data}
 ``` json
 {"summary":"{\n  \"name\": \"plt\",\n  \"rows\": 2,\n  \"fields\": [\n    {\n      \"column\": \"sex\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Male\",\n          \"Female\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"sin ponderar\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 13.757400066865792,\n        \"min\": 10.93595450049456,\n        \"max\": 30.391856258048687,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          30.391856258048687,\n          10.93595450049456\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"ponderada\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 13.544192195246058,\n        \"min\": 10.847606931979676,\n        \"max\": 30.001987225884474,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          30.001987225884474,\n          10.847606931979676\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe"}
 ```
-:::
 
-::: {.output .display_data}
 ![](vertopal_08062244d02c4ab08df2fb5ca7b96803/e647867985c4c79d2e872f39584ef76a35b329c6.png)
-:::
-:::
 
-::: {#aa70dc96 .cell .markdown id="aa70dc96"}
+
+
 **Interpretación.** La clase `>50K` es minoritaria: 11,681 personas
 (**23.9 %**) frente a 37,109 (76.1 %), una razón de **3.2 a 1**. Por eso
 a lo largo del análisis **comparamos tasas, no conteos**: una categoría
@@ -1391,12 +1250,10 @@ resultados (23.79 % vs 23.94 % de tasa global; 30.0 % vs 30.4 % en
 hombres; 10.8 % vs 10.9 % en mujeres). Esto respalda analizar el dato
 sin ponderar.
 
-# 8. Visualización univariada {#8-visualización-univariada}
+# 8. Visualización univariada 
 
-## 8.1 Distribución de las variables numéricas {#81-distribución-de-las-variables-numéricas}
-:::
+## 8.1 Distribución de las variables numéricas 
 
-::: {#49c10f3b .cell .code execution_count="16" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":580}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:43.666392Z\",\"iopub.status.busy\":\"2026-10-30T00:03:43.665893Z\",\"iopub.status.idle\":\"2026-10-30T00:03:44.641724Z\",\"shell.execute_reply\":\"2026-10-30T00:03:44.640578Z\"}" id="49c10f3b" outputId="c7b78399-f1cd-419e-8ab5-de16f068bd2d"}
 ``` python
 fig, axes = plt.subplots(2, 3, figsize=(15, 8))
 
@@ -1430,12 +1287,8 @@ plt.tight_layout()
 plt.show()
 ```
 
-::: {.output .display_data}
 ![](vertopal_08062244d02c4ab08df2fb5ca7b96803/a308d3f60a95c2d921b8bc30f977b402f668a679.png)
-:::
-:::
 
-::: {#1c24edc2 .cell .markdown id="1c24edc2"}
 **Interpretación.**
 
 -   **Edad:** distribución con una cola derecha suave y un pequeño pico
@@ -1459,10 +1312,7 @@ plt.show()
 > logaritmo a `capital_gain` es la misma idea: permite comparar «mucho»
 > con «poquísimo» sin que unos pocos valores dominen la escala.
 
-## 8.2 Distribución de las variables categóricas {#82-distribución-de-las-variables-categóricas}
-:::
-
-::: {#7d198693 .cell .code execution_count="17" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":586}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:44.643928Z\",\"iopub.status.busy\":\"2026-10-30T00:03:44.643266Z\",\"iopub.status.idle\":\"2026-10-30T00:03:45.359701Z\",\"shell.execute_reply\":\"2026-10-30T00:03:45.358456Z\"}" id="7d198693" outputId="8a864598-80d1-44a3-b359-dbd6279066ca"}
+## 8.2 Distribución de las variables categóricas 
 ``` python
 variables = ["sex", "race", "workclass", "marital_status", "nivel_educativo", "tipo_ocupacion"]
 titulos = ["Sexo", "Raza", "Clase de empleador", "Estado civil", "Nivel educativo", "Tipo de ocupación"]
@@ -1481,12 +1331,9 @@ plt.tight_layout()
 plt.show()
 ```
 
-::: {.output .display_data}
-![](vertopal_08062244d02c4ab08df2fb5ca7b96803/80e3f1e6049fa6996199553489dbc31cc6efe413.png)
-:::
-:::
 
-::: {#8e59821e .cell .markdown id="8e59821e"}
+![](vertopal_08062244d02c4ab08df2fb5ca7b96803/80e3f1e6049fa6996199553489dbc31cc6efe413.png)
+
 **Interpretación.** La muestra está dominada por hombres (66.8 %),
 personas blancas (85.5 %), empleados del sector privado (69.4 %),
 casados con cónyuge en el hogar (45.9 %) y nacidos en EE. UU. (89.8 %).
@@ -1501,12 +1348,10 @@ mayoritario, lo que es un riesgo de sesgo.
 > color neutro cuando solo se describe composición y etiquetamos los
 > valores directamente sobre las barras para no depender del eje.
 
-# 9. Relaciones con la variable objetivo {#9-relaciones-con-la-variable-objetivo}
+# 9. Relaciones con la variable objetivo 
 
-## 9.1 Variables numéricas frente al ingreso {#91-variables-numéricas-frente-al-ingreso}
-:::
+## 9.1 Variables numéricas frente al ingreso 
 
-::: {#caeb47be .cell .code execution_count="18" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":423}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:45.362772Z\",\"iopub.status.busy\":\"2026-10-30T00:03:45.362032Z\",\"iopub.status.idle\":\"2026-10-30T00:03:46.191547Z\",\"shell.execute_reply\":\"2026-10-30T00:03:46.190092Z\"}" id="caeb47be" outputId="03a884ca-0237-4ff1-af6e-438578ea15cd"}
 ``` python
 fig, axes = plt.subplots(1, 4, figsize=(17, 4.5))
 for ax, col, titulo in zip(axes, ["age", "education_num", "hours_per_week", "fnlwgt"],
@@ -1523,18 +1368,12 @@ plt.show()
 display(df.groupby("income")[["age", "education_num", "hours_per_week", "fnlwgt"]].median())
 ```
 
-::: {.output .display_data}
 ![](vertopal_08062244d02c4ab08df2fb5ca7b96803/7bfeb3094f282b44dbd8155930a8d098930e2c22.png)
-:::
 
-::: {.output .display_data}
 ``` json
 {"summary":"{\n  \"name\": \"display(df\",\n  \"rows\": 2,\n  \"fields\": [\n    {\n      \"column\": \"income\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \">50K\",\n          \"<=50K\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"age\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 6.363961030678928,\n        \"min\": 34.0,\n        \"max\": 43.0,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          43.0,\n          34.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"education_num\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 2.1213203435596424,\n        \"min\": 9.0,\n        \"max\": 12.0,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          12.0,\n          9.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"hours_per_week\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0.0,\n        \"min\": 40.0,\n        \"max\": 40.0,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          40.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"fnlwgt\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1472.196318430392,\n        \"min\": 176729.0,\n        \"max\": 178811.0,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          176729.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe"}
 ```
-:::
-:::
 
-::: {#911cf2e4 .cell .markdown id="911cf2e4"}
 **Interpretación.**
 
 -   **Edad:** la mediana es 34 años en `<=50K` y 43 en `>50K`; el grupo
@@ -1549,16 +1388,14 @@ display(df.groupby("income")[["age", "education_num", "hours_per_week", "fnlwgt"
     178,800 vs 176,700). El peso muestral **no distingue** a quienes
     ganan más de quienes ganan menos, lo que respalda H7.
 
-## 9.2 Tasa de ingresos altos por edad, educación y horas {#92-tasa-de-ingresos-altos-por-edad-educación-y-horas}
+## 9.2 Tasa de ingresos altos por edad, educación y horas 
 
 Pasamos de comparar distribuciones a medir **la probabilidad de ingresos
 altos dentro de cada categoría**. Cada barra es el promedio de
 `pct_alto` (porcentaje con ingresos \> USD 50,000); la línea negra fina
 es el intervalo de confianza del 95 % y la línea punteada, el promedio
 general (23.9 %).
-:::
 
-::: {#232f74da .cell .code execution_count="19" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":388}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:46.193522Z\",\"iopub.status.busy\":\"2026-10-30T00:03:46.193291Z\",\"iopub.status.idle\":\"2026-10-30T00:03:47.625341Z\",\"shell.execute_reply\":\"2026-10-30T00:03:47.624365Z\"}" id="232f74da" outputId="1a53160b-8c3d-404c-c45b-676490c7832f"}
 ``` python
 promedio = df["pct_alto"].mean()      # promedio general (23.9 %)
 
@@ -1582,18 +1419,12 @@ for col in ["grupo_edad", "nivel_educativo", "grupo_horas"]:
     print(col, df[col].value_counts().sort_index().to_dict())
 ```
 
-::: {.output .display_data}
 ![](vertopal_08062244d02c4ab08df2fb5ca7b96803/f6285bbf4d6345adf1931ba1cfc8a7cfb0fa2ce1.png)
-:::
 
-::: {.output .stream .stdout}
     grupo_edad {'17-24': 8409, '25-34': 12564, '35-44': 12184, '45-54': 8765, '55-64': 4782, '65+': 2086}
     nivel_educativo {'1. Sin diploma': 6399, '2. Bachiller': 15770, '3. Técnico / univ. incompleta': 14524, '4. Pregrado': 8013, '5. Posgrado': 4084}
     grupo_horas {'≤19': 2586, '20-34': 5800, '35-40': 26061, '41-49': 4667, '50-60': 8000, '>60': 1676}
-:::
-:::
 
-::: {#746330a7 .cell .markdown id="746330a7"}
 **Interpretación (H1, H2, H3).**
 
 -   **Edad (H2 ✔):** la relación es **no lineal**. Solo 1.1 % de las
@@ -1621,10 +1452,10 @@ for col in ["grupo_edad", "nivel_educativo", "grupo_horas"]:
 > de estudios y las rutas de carrera que ayuden a completar el pregrado
 > pueden ser la palanca de retención y movilidad más rentable.
 
-## 9.3 Tasa de ingresos altos por ocupación, empleador, estado civil y rol en el hogar {#93-tasa-de-ingresos-altos-por-ocupación-empleador-estado-civil-y-rol-en-el-hogar}
-:::
+## 9.3 Tasa de ingresos altos por ocupación, empleador, estado civil y rol en el hogar 
 
-::: {#39795115 .cell .code execution_count="20" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":683}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:47.627294Z\",\"iopub.status.busy\":\"2026-10-30T00:03:47.626703Z\",\"iopub.status.idle\":\"2026-10-30T00:03:49.803675Z\",\"shell.execute_reply\":\"2026-10-30T00:03:49.802460Z\"}" id="\"39795115\"" outputId="03fb900e-8bee-40b3-ca9a-a1b8155bfaf8"}
+
+
 ``` python
 fig, axes = plt.subplots(2, 2, figsize=(16, 10))
 for ax, col, titulo in zip(axes.ravel(), ["occupation", "workclass", "marital_status", "relationship"],
@@ -1646,12 +1477,8 @@ plt.tight_layout()
 plt.show()
 ```
 
-::: {.output .display_data}
 ![](vertopal_08062244d02c4ab08df2fb5ca7b96803/3c4a2a4661a4a53c70e7a104371d7420134b24bd.png)
-:::
-:::
 
-::: {#14653f5b .cell .markdown id="14653f5b"}
 **Interpretación (H5 ✔).**
 
 -   **Ocupación:** `Exec-managerial` (47.8 %) y `Prof-specialty` (45.1
@@ -1679,10 +1506,9 @@ plt.show()
     conjunto) y no de ser hombre o mujer. Lo retomamos en la sección
     10.3.
 
-## 9.4 Sexo, raza, origen y capital {#94-sexo-raza-origen-y-capital}
-:::
+## 9.4 Sexo, raza, origen y capital 
 
-::: {#95afdc68 .cell .code execution_count="21" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":284}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:49.805804Z\",\"iopub.status.busy\":\"2026-10-30T00:03:49.805118Z\",\"iopub.status.idle\":\"2026-10-30T00:03:51.498093Z\",\"shell.execute_reply\":\"2026-10-30T00:03:51.496842Z\"}" id="95afdc68" outputId="9d419ffe-99b3-4c99-a792-664417e83de6"}
+
 ``` python
 fig, axes = plt.subplots(1, 4, figsize=(19, 4.8))
 ordenes = [["Female", "Male"], None, ["Estados Unidos", "Otro país", "No reporta"],
@@ -1701,12 +1527,8 @@ plt.tight_layout()
 plt.show()
 ```
 
-::: {.output .display_data}
 ![](vertopal_08062244d02c4ab08df2fb5ca7b96803/556d62c47382c97bb2ddbd95cc16ce5fca9afe40.png)
-:::
-:::
 
-::: {#879e5501 .cell .markdown id="879e5501"}
 **Interpretación (H6 ✔).**
 
 -   **Sexo:** 30.4 % de los hombres vs 10.9 % de las mujeres, una
@@ -1728,10 +1550,8 @@ plt.show()
     invertido es un **marcador de patrimonio**: no se pierde en bolsa lo
     que no se tiene.
 
-## 9.5 Correlaciones y pruebas de asociación {#95-correlaciones-y-pruebas-de-asociación}
-:::
+## 9.5 Correlaciones y pruebas de asociación 
 
-::: {#de0fd4d9 .cell .code execution_count="22" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":1000}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:51.500235Z\",\"iopub.status.busy\":\"2026-10-30T00:03:51.499593Z\",\"iopub.status.idle\":\"2026-10-30T00:03:52.021380Z\",\"shell.execute_reply\":\"2026-10-30T00:03:52.020251Z\"}" id="de0fd4d9" outputId="e2d1637b-6d4c-4f62-a4b7-92d3124b61ba"}
 ``` python
 # Correlación de Spearman entre variables numéricas y el objetivo
 # (Spearman usa rangos, por eso funciona bien con variables muy sesgadas como el capital)
@@ -1759,18 +1579,13 @@ tabla_asociacion["p-valor"] = tabla_asociacion["p-valor"].apply(lambda p: f"{p:.
 display(tabla_asociacion)
 ```
 
-::: {.output .display_data}
-![](vertopal_08062244d02c4ab08df2fb5ca7b96803/4125265aaadb50ef929d09f5423e54360dace04e.png)
-:::
 
-::: {.output .display_data}
+![](vertopal_08062244d02c4ab08df2fb5ca7b96803/4125265aaadb50ef929d09f5423e54360dace04e.png)
+
 ``` json
 {"summary":"{\n  \"name\": \"tabla_asociacion\",\n  \"rows\": 8,\n  \"fields\": [\n    {\n      \"column\": \"variable\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 8,\n        \"samples\": [\n          \"occupation\",\n          \"native_country\",\n          \"education\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"p-valor\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 3,\n        \"samples\": [\n          \"0.0e+00\",\n          \"3.8e-70\",\n          \"3.4e-104\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"tasa m\\u00e1s baja (%)\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 4.191026512001168,\n        \"min\": 1.25,\n        \"max\": 11.702127659574469,\n        \"num_unique_values\": 8,\n        \"samples\": [\n          1.25,\n          4.854368932038835,\n          3.2653061224489797\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"tasa m\\u00e1s alta (%)\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 14.672778971412491,\n        \"min\": 26.961107448912326,\n        \"max\": 73.98081534772182,\n        \"num_unique_values\": 8,\n        \"samples\": [\n          47.78033541598158,\n          41.05960264900662,\n          73.98081534772182\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"diferencia (puntos)\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 17.315367396012878,\n        \"min\": 15.258979789337857,\n        \"max\": 70.71550922527284,\n        \"num_unique_values\": 8,\n        \"samples\": [\n          46.53033541598158,\n          36.20523371696778,\n          70.71550922527284\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"tabla_asociacion"}
 ```
-:::
-:::
 
-::: {#7667e609 .cell .markdown id="7667e609"}
 **Interpretación.**
 
 -   **Correlaciones:** se usa **Spearman** y no Pearson porque
@@ -1804,16 +1619,14 @@ display(tabla_asociacion)
 
 ------------------------------------------------------------------------
 
-# 10. Patrones e interacciones {#10-patrones-e-interacciones}
+# 10. Patrones e interacciones 
 
 Las relaciones de a una variable cuentan solo parte de la historia. Aquí
 estudiamos **combinaciones**: cómo se potencian (o se cancelan) las
 variables entre sí.
 
-## 10.1 Edad × horas trabajadas {#101-edad--horas-trabajadas}
-:::
+## 10.1 Edad × horas trabajadas 
 
-::: {#2897de49 .cell .code execution_count="23" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":559}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:52.023593Z\",\"iopub.status.busy\":\"2026-10-30T00:03:52.022838Z\",\"iopub.status.idle\":\"2026-10-30T00:03:52.204681Z\",\"shell.execute_reply\":\"2026-10-30T00:03:52.203749Z\"}" id="2897de49" outputId="18cf2420-1518-4227-de42-02fcf0531393"}
 ``` python
 # Tabla cruzada: % de ingresos altos para cada combinación de edad y horas
 tabla_edad_horas = df.pivot_table(index="grupo_edad", columns="grupo_horas", values="pct_alto", aggfunc="mean")
@@ -1830,16 +1643,11 @@ plt.show()
 print("Número de personas en la celda más pequeña:", n_edad_horas.min().min())
 ```
 
-::: {.output .display_data}
+
 ![](vertopal_08062244d02c4ab08df2fb5ca7b96803/050a865502a19c06e0bc737ff99995ac00beb171.png)
-:::
 
-::: {.output .stream .stdout}
     Número de personas en la celda más pequeña: 51
-:::
-:::
 
-::: {#2d5e00c5 .cell .markdown id="2d5e00c5"}
 **Interpretación.** Los efectos de edad y horas **se multiplican**: la
 combinación de **45--54 años y 50--60 horas** alcanza **57.5 %** de
 ingresos altos, mientras que quienes tienen 17--24 años casi nunca
@@ -1849,10 +1657,7 @@ no compensa la falta de trayectoria. También se aprecia en casi todas
 las filas la caída por encima de 60 h. La celda más pequeña tiene 51
 personas, suficiente para una lectura general.
 
-## 10.2 Educación × ocupación: ¿la educación rinde igual en todos los trabajos? {#102-educación--ocupación-la-educación-rinde-igual-en-todos-los-trabajos}
-:::
-
-::: {#8e48e637 .cell .code execution_count="24" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":731}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:52.206640Z\",\"iopub.status.busy\":\"2026-10-30T00:03:52.206021Z\",\"iopub.status.idle\":\"2026-10-30T00:03:52.479040Z\",\"shell.execute_reply\":\"2026-10-30T00:03:52.478035Z\"}" id="8e48e637" outputId="6cec265b-4418-4acc-ed5b-63ab2e11a450"}
+## 10.2 Educación × ocupación: ¿la educación rinde igual en todos los trabajos?
 ``` python
 # Quitamos dos ocupaciones con muy pocas personas (15 y 240) para que las celdas del mapa sean confiables
 d_ocup = df[~df["occupation"].isin(["Armed-Forces", "Priv-house-serv"])]
@@ -1870,12 +1675,8 @@ plt.xticks(rotation=15)
 plt.show()
 ```
 
-::: {.output .display_data}
 ![](vertopal_08062244d02c4ab08df2fb5ca7b96803/04356fe6492829fed6f50fa7d81dacb9eb545fa7.png)
-:::
-:::
 
-::: {#c3791e1e .cell .markdown id="c3791e1e"}
 **Interpretación.** Hay **dos efectos que se suman**: la educación sube
 la probabilidad *dentro* de cada ocupación, y la ocupación define el
 techo. Por ejemplo, un posgrado en `Exec-managerial` implica \~74 % de
@@ -1889,10 +1690,8 @@ celdas de posgrado en ocupaciones poco comunes (como `Handlers-cleaners`
 o `Farming-fishing`) se basan en muy pocas personas y deben leerse con
 cautela.
 
-## 10.3 La brecha de género: de 19.5 puntos a casi cero {#103-la-brecha-de-género-de-195-puntos-a-casi-cero}
-:::
+## 10.3 La brecha de género: de 19.5 puntos a casi cero 
 
-::: {#3d941c10 .cell .code execution_count="25" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":629}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:52.480707Z\",\"iopub.status.busy\":\"2026-10-30T00:03:52.480543Z\",\"iopub.status.idle\":\"2026-10-30T00:03:53.042760Z\",\"shell.execute_reply\":\"2026-10-30T00:03:53.041732Z\"}" id="3d941c10" outputId="0f76f6ba-e838-41ab-e33e-48ce3640397d"}
 ``` python
 colores_sexo = {"Female": ROSA, "Male": VERDE}
 fig, axes = plt.subplots(1, 3, figsize=(18, 4.8))
@@ -1939,11 +1738,9 @@ print("\nCasados/as con pregrado o más: % de ingresos altos por sexo")
 print(df[(df["casado"] == 1) & (df["pregrado_o_mas"] == 1)].groupby("sex")["pct_alto"].mean())
 ```
 
-::: {.output .display_data}
-![](vertopal_08062244d02c4ab08df2fb5ca7b96803/8bcc994e14c524c4f70215b2b8172564a6079cd3.png)
-:::
 
-::: {.output .stream .stdout}
+![](vertopal_08062244d02c4ab08df2fb5ca7b96803/8bcc994e14c524c4f70215b2b8172564a6079cd3.png)
+
     % de cada sexo que está casado/a:
     sex
     Female   15.49
@@ -1963,10 +1760,7 @@ print(df[(df["casado"] == 1) & (df["pregrado_o_mas"] == 1)].groupby("sex")["pct_
     Female   71.90
     Male     71.82
     Name: pct_alto, dtype: float64
-:::
-:::
 
-::: {#dc8e9622 .cell .markdown id="dc8e9622"}
 **Interpretación (H4 ✔ con matiz).** La brecha bruta (**30.4 % vs 10.9
 %**) existe en casi todas las edades y niveles educativos (paneles a y
 b), lo que sugiere un fenómeno estructural. Pero el panel c cambia la
@@ -2000,10 +1794,8 @@ de 3.56 a 1.14 al incluir el estado civil.
 > correcto compara *personas comparables* (mismo cargo, antigüedad,
 > horas) y no solo promedios globales.
 
-## 10.4 Concentración del capital: ¿quién gana con el capital? {#104-concentración-del-capital-quién-gana-con-el-capital}
-:::
+## 10.4 Concentración del capital: ¿quién gana con el capital? 
 
-::: {#d13e67db .cell .code execution_count="26" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":607}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:53.044817Z\",\"iopub.status.busy\":\"2026-10-30T00:03:53.044231Z\",\"iopub.status.idle\":\"2026-10-30T00:03:53.139043Z\",\"shell.execute_reply\":\"2026-10-30T00:03:53.138176Z\"}" id="d13e67db" outputId="cf9e6067-c89f-4432-cb34-4c61aca6346a"}
 ``` python
 # Ordenamos las ganancias de mayor a menor
 ganancias = df["capital_gain"].sort_values(ascending=False)
@@ -2033,11 +1825,9 @@ print("\n% de ingresos altos según movimiento de capital:")
 print(df.groupby("categoria_capital")["pct_alto"].agg(["mean", "count"]))
 ```
 
-::: {.output .display_data}
-![](vertopal_08062244d02c4ab08df2fb5ca7b96803/dd0772c6cab6bd7ab2c0f2765daa030587a6401d.png)
-:::
 
-::: {.output .stream .stdout}
+![](vertopal_08062244d02c4ab08df2fb5ca7b96803/dd0772c6cab6bd7ab2c0f2765daa030587a6401d.png)
+
     Personas con ganancia de capital > 0: 8.3%
     Las 244 personas con el valor truncado 99,999 concentran el 46.3 % de TODA la ganancia registrada
 
@@ -2048,10 +1838,7 @@ print(df.groupby("categoria_capital")["pct_alto"].agg(["mean", "count"]))
     Ganancia ≥ 5,000  90.09   2451
     Pérdida           50.13   2282
     Sin movimiento    18.94  42473
-:::
-:::
 
-::: {#23908cdc .cell .markdown id="23908cdc"}
 **Interpretación (H6 ✔).** Las ganancias de capital están
 **extremadamente concentradas**: el **1 % de las personas acumula el 56
 %** del total, el 5 % acumula el 91 %, y solo el 8.3 % de la muestra
@@ -2069,10 +1856,8 @@ refuerza la decisión de usar categorías, logaritmos y medianas.
 > probabilidad de ingresos altos). Para segmentar mercados de inversión
 > o banca privada, ese 8 % es el objetivo, no el promedio.
 
-## 10.5 Segmentos de perfil {#105-segmentos-de-perfil}
-:::
+## 10.5 Segmentos de perfil 
 
-::: {#fc605ac4 .cell .code execution_count="27" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":581}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:53.141218Z\",\"iopub.status.busy\":\"2026-10-30T00:03:53.140640Z\",\"iopub.status.idle\":\"2026-10-30T00:03:53.253734Z\",\"shell.execute_reply\":\"2026-10-30T00:03:53.252658Z\"}" id="fc605ac4" outputId="12b4391f-5c7b-4128-f0f2-a4ce316495da"}
 ``` python
 # Combinamos dos condiciones: estar casado/a y tener pregrado o más
 segmentos = df.groupby(["casado", "pregrado_o_mas"])["pct_alto"].agg(["mean", "count"])
@@ -2094,18 +1879,13 @@ plt.title("Hogar conyugal + pregrado: el perfil con mayor probabilidad")
 plt.show()
 ```
 
-::: {.output .display_data}
+
 ``` json
 {"summary":"{\n  \"name\": \"segmentos\",\n  \"rows\": 4,\n  \"fields\": [\n    {\n      \"column\": \"% con ingresos >50K\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 29.382984596623462,\n        \"min\": 3.149305721238727,\n        \"max\": 71.83140842957852,\n        \"num_unique_values\": 4,\n        \"samples\": [\n          18.950276243093924,\n          71.83140842957852,\n          3.149305721238727\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"n personas\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 7430,\n        \"min\": 5430,\n        \"max\": 20957,\n        \"num_unique_values\": 4,\n        \"samples\": [\n          5430,\n          6667,\n          20957\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"veces el promedio\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1.2272886041171633,\n        \"min\": 0.1315423560818744,\n        \"max\": 3.0003034134741338,\n        \"num_unique_values\": 4,\n        \"samples\": [\n          0.7915281036731038,\n          3.0003034134741338,\n          0.1315423560818744\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"% de todos los >50K\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 20.61072601559413,\n        \"min\": 5.650201181405703,\n        \"max\": 44.54241931341494,\n        \"num_unique_values\": 4,\n        \"samples\": [\n          8.809177296464346,\n          40.998202208715,\n          5.650201181405703\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"segmentos"}
 ```
-:::
 
-::: {.output .display_data}
 ![](vertopal_08062244d02c4ab08df2fb5ca7b96803/d63fe1248a8ddaefd099dfee5af45cc625f083b4.png)
-:::
-:::
 
-::: {#cc25977b .cell .markdown id="cc25977b"}
 **Interpretación.** Combinando solo dos condiciones ---estar casado/a y
 tener pregrado o más--- se separa a la población de forma muy marcada:
 **«casado/a con pregrado+» tiene 71.8 % de ingresos altos (3.0 veces el
@@ -2122,9 +1902,7 @@ fácil de explicar y consistente con todo lo visto antes.
 > paneles con un titular explícito, jerarquía visual clara y la misma
 > codificación de color del resto del informe. Pensada para proyectarse
 > o incluirse en una presentación a perfiles no técnicos.
-:::
 
-::: {#6f121b47 .cell .code execution_count="28" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":722}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:53.255398Z\",\"iopub.status.busy\":\"2026-10-30T00:03:53.255215Z\",\"iopub.status.idle\":\"2026-10-30T00:03:53.983017Z\",\"shell.execute_reply\":\"2026-10-30T00:03:53.981136Z\"}" id="6f121b47" outputId="b4970fd5-2567-4858-fdb3-7561d00f0cf8"}
 ``` python
 fig, axes = plt.subplots(2, 2, figsize=(16, 10.5))
 
@@ -2169,12 +1947,9 @@ plt.tight_layout(rect=[0, 0, 1, .96])
 plt.show()
 ```
 
-::: {.output .display_data}
-![](vertopal_08062244d02c4ab08df2fb5ca7b96803/d3901c8616aa23062c29c8e991894c8e408f1d33.png)
-:::
-:::
 
-::: {#548d99f5 .cell .markdown id="548d99f5"}
+![](vertopal_08062244d02c4ab08df2fb5ca7b96803/d3901c8616aa23062c29c8e991894c8e408f1d33.png)
+
 **Lectura.** Si solo se pudiera conservar una figura del informe, sería
 esta: cuatro mensajes independientes ---**educación, ciclo de vida,
 estructura del hogar y la doble lectura de la brecha de género**--- que
@@ -2249,9 +2024,9 @@ como una *variable derivada que hay que validar*, telecomunicaciones
 como *una señal confundida con su contexto* y diseño como *una historia
 que no debe simplificarse en exceso*.
 
-# 13. Conclusiones, limitaciones y recomendaciones {#13-conclusiones-limitaciones-y-recomendaciones}
+# 13. Conclusiones, limitaciones y recomendaciones 
 
-## 13.1 Contraste de hipótesis {#131-contraste-de-hipótesis}
+## 13.1 Contraste de hipótesis {
 
   -----------------------------------------------------------------------
   \#                Hipótesis         Veredicto         Evidencia clave
@@ -2312,7 +2087,7 @@ que no debe simplificarse en exceso*.
                                                         grupos.
   -----------------------------------------------------------------------
 
-## 13.2 Conclusiones principales {#132-conclusiones-principales}
+## 13.2 Conclusiones principales 
 
 1.  **Los ingresos altos se explican por una combinación, no por un
     único factor.** Hogar conyugal, educación formal completada y etapa
@@ -2332,7 +2107,7 @@ que no debe simplificarse en exceso*.
     muestral sin relación con el ingreso. Tratar estos casos con
     criterio fue tan importante como cualquier gráfica.
 
-## 13.3 Limitaciones {#133-limitaciones}
+## 13.3 Limitaciones 
 
 -   **Antigüedad y contexto:** datos de 1994 en EE. UU.; el umbral de
     USD 50,000 y la estructura laboral y familiar de hoy son distintos.
@@ -2351,7 +2126,7 @@ que no debe simplificarse en exceso*.
 -   **Truncamiento:** los valores 99,999 y 90 son códigos, no
     mediciones.
 
-## 13.4 Recomendaciones {#134-recomendaciones}
+## 13.4 Recomendaciones 
 
 **Para decisiones de negocio y de personas (Administración):**
 
@@ -2433,9 +2208,7 @@ cambia la *razón de odds* (OR) de los hombres frente a las mujeres al ir
 agregando variables. Un OR de 1 significa «sin diferencia»; un OR de 3.5
 significa que las odds de ingresos altos de los hombres son 3.5 veces
 las de las mujeres.
-:::
 
-::: {#dfd1cf43 .cell .code execution_count="29" colab="{\"base_uri\":\"https://localhost:8080/\",\"height\":596}" execution="{\"iopub.execute_input\":\"2026-10-30T00:03:53.986052Z\",\"iopub.status.busy\":\"2026-10-30T00:03:53.985274Z\",\"iopub.status.idle\":\"2026-10-30T00:03:54.858177Z\",\"shell.execute_reply\":\"2026-10-30T00:03:54.857146Z\"}" id="dfd1cf43" outputId="1ead2a91-4a4c-452c-a9bd-2b44b0a293b3"}
 ``` python
 import statsmodels.formula.api as smf
 
@@ -2469,18 +2242,13 @@ plt.title("Al incluir el estado civil, la brecha baja de 3.56 a 1.14")
 plt.show()
 ```
 
-::: {.output .display_data}
+
 ``` json
 {"summary":"{\n  \"name\": \"tabla_or\",\n  \"rows\": 4,\n  \"fields\": [\n    {\n      \"column\": \"modelo\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 4,\n        \"samples\": [\n          \"M1 \\u00b7 + edad, educaci\\u00f3n, horas\",\n          \"M3 \\u00b7 + estado civil (casado)\",\n          \"M0 \\u00b7 solo sexo\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"OR hombre vs mujer\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1.1060105815557952,\n        \"min\": 1.138139573678361,\n        \"max\": 3.5558456186999767,\n        \"num_unique_values\": 4,\n        \"samples\": [\n          3.1951020370381467,\n          1.138139573678361,\n          3.5558456186999767\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"IC 95 % inferior\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1.0527764903356343,\n        \"min\": 1.0525926929917546,\n        \"max\": 3.366476906187714,\n        \"num_unique_values\": 4,\n        \"samples\": [\n          3.0084183273363725,\n          1.0525926929917546,\n          3.366476906187714\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"IC 95 % superior\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1.1618479791818386,\n        \"min\": 1.2306390665614362,\n        \"max\": 3.7558665680396004,\n        \"num_unique_values\": 4,\n        \"samples\": [\n          3.3933701753917944,\n          1.2306390665614362,\n          3.7558665680396004\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}","type":"dataframe","variable_name":"tabla_or"}
 ```
-:::
 
-::: {.output .display_data}
 ![](vertopal_08062244d02c4ab08df2fb5ca7b96803/58739ee9796b6ca8d64c3759c041f0b3246c7422.png)
-:::
-:::
 
-::: {#31ea3abe .cell .markdown id="31ea3abe"}
 **Interpretación.**
 
 -   **M0:** sin controles, los hombres tienen **3.56 veces las odds** de
@@ -2499,4 +2267,4 @@ civil podría ser un *mediador* (consecuencia de desigualdades) o un
 artefacto de cómo se registró el ingreso del hogar, y el dato no permite
 distinguirlos; (iii) entre personas no casadas la brecha sigue
 existiendo (8.2 % vs 4.7 %).
-:::
+
