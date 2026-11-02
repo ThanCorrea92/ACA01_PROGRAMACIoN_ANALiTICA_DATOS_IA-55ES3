@@ -18,7 +18,18 @@ jupyter:
   nbformat: 4
   nbformat_minor: 5
 ---
-
+<style>
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    th, td {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+    }
+</style>
 
 # Analítica Exploratoria de Datos (EDA) · Adult Income 
 
