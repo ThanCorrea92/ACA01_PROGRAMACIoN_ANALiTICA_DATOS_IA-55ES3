@@ -19,15 +19,26 @@ jupyter:
   nbformat_minor: 5
 ---
 <style>
+    /* Hace que TODAS las tablas del documento tengan scroll horizontal automático */
     table {
         display: block;
         width: 100%;
         overflow-x: auto;
-        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        border-collapse: collapse;
+        margin-bottom: 20px;
     }
+    
+    /* Estilos limpios para las celdas y bordes en todas las tablas */
     th, td {
-        padding: 8px 12px;
-        border: 1px solid #ddd;
+        padding: 10px 14px;
+        border: 1px solid #d0d7de;
+        text-align: left;
+        vertical-align: top;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #f6f8fa;
     }
 </style>
 
